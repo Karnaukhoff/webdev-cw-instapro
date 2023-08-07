@@ -18,7 +18,7 @@ export function renderPostFromApi({posts, element}) {
               </p>
             </div>
             <p class="post-text">
-              <span class="user-name">Иван Иваныч</span>
+              <span class="user-name">${post.user.name}</span>
               ${post.description}
             </p>
             <p class="post-date">
