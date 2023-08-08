@@ -4,7 +4,7 @@ import { renderHeaderComponent } from "./header-component.js";
 import { addLike, removeLike, getUserPosts } from "../api.js";
 
 export function userPage({userPostId, appEl, posts, token}) {
-    //post.user.id
+    //post.user.id;
     let userImageUrl = ``;
     let userName = ``;
     let userPageId = ``;
