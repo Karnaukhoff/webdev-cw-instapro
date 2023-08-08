@@ -124,6 +124,8 @@ const renderApp = () => {
   if (page === POSTS_PAGE) {
     return renderPostsPageComponent({
       appEl,
+      token: getToken(),
+      posts,
     });
   }
 
@@ -132,7 +134,9 @@ const renderApp = () => {
     getPosts({ token: getToken() })
         .then((newPosts) => {
           posts = newPosts;
-          userPage({userPostId, appEl, posts});
+          userPage({userPostId, appEl, posts, 
+          token: getToken(),
+          });
         });
     return;
   }

@@ -1,5 +1,19 @@
+
 export function renderPostFromApi({posts, element}) {
     let postHtml = posts.map((post) => {
+      function isLiked(post) {
+        if (post.isLiked === false) { return `./assets/images/like-not-active.svg`;} 
+        else { return `./assets/images/like-active.svg`;}
+      };
+      function likes(post){
+        if ( post.likes.length === 0){
+          return `0`;
+        } else if (post.likes.length === 1) {
+          return post.likes[0].name;
+        } else {
+          return `${post.likes[post.likes.length - 1].name} и еще ${post.likes.length - 1}`;
+        }
+      };
         return `
         <li class="post">
             <div class="post-header" data-user-id="${post.id}">
@@ -10,11 +24,11 @@ export function renderPostFromApi({posts, element}) {
               <img class="post-image" src="${post.imageUrl}">
             </div>
             <div class="post-likes">
-              <button data-post-id="642d00579b190443860c2f32" class="like-button">
-                <img src="./assets/images/like-active.svg">
+              <button data-post-id="${post.id}" class="like-button">
+                <img src="${isLiked(post)}">
               </button>
               <p class="post-likes-text">
-                Нравится: <strong>2</strong>
+                Нравится: <strong>${likes(post)}</strong>
               </p>
             </div>
             <p class="post-text">

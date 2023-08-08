@@ -1,9 +1,10 @@
 import { USER_POSTS_PAGE } from "../routes.js";
 import { renderHeaderComponent } from "./header-component.js";
-import { posts, goToPage } from "../index.js";
+import { goToPage } from "../index.js";
 import { renderPostFromApi } from "./upload-post-from-api.js";
+import { addLike, removeLike, getPosts } from "../api.js";
 
-export function renderPostsPageComponent({ appEl }) {
+export function renderPostsPageComponent({ appEl, token, posts }) {
   // TODO: реализовать рендер постов из api
   console.log("Актуальный список постов:", posts);
 
@@ -36,5 +37,23 @@ export function renderPostsPageComponent({ appEl }) {
         userId: userEl.dataset.userId,
       });
     });
+  }
+
+  for (const likeButton of document.querySelectorAll(".like-button")){
+    likeButton.addEventListener("click", async function() {
+      const idPost = likeButton.dataset.postId;
+      const post = posts.find((item) => item.id === idPost);
+
+      if (post.isLiked === false){
+        await addLike({idPost, token});
+        posts = await getPosts({ token });
+        renderPostsPageComponent({ appEl, token, posts });
+      }
+      if (post.isLiked === true){
+        await removeLike({idPost, token});
+        posts = await getPosts({ token });
+        renderPostsPageComponent({ appEl, token, posts });
+      }
+    })
   }
 }
