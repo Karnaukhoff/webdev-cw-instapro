@@ -1,3 +1,5 @@
+import { formatDistanceToNow } from "date-fns";
+import { ru } from 'date-fns/locale';
 import { renderHeaderComponent } from "./header-component.js";
 import { addLike, removeLike, getUserPosts } from "../api.js";
 
@@ -33,6 +35,7 @@ export function userPage({userPostId, appEl, posts, token}) {
   //функция показа постов конкретного пользователя
   function userPostsPage({element}) {
     let postHtml = posts.map((post) => {
+      const createTime = formatDistanceToNow(new Date(post.createdAt), { locale: ru });
       function isLiked(post) {
         if (post.isLiked === false) { return `./assets/images/like-not-active.svg`;} 
         else { return `./assets/images/like-active.svg`;}
@@ -65,7 +68,7 @@ export function userPage({userPostId, appEl, posts, token}) {
               ${post.description}
             </p>
             <p class="post-date">
-              19 минут назад
+              ${createTime} назад
             </p>
         </li>
             `;

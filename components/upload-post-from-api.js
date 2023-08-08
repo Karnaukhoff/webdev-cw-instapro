@@ -1,6 +1,9 @@
+import { formatDistanceToNow } from "date-fns";
+import { ru } from 'date-fns/locale';
 
 export function renderPostFromApi({posts, element}) {
     let postHtml = posts.map((post) => {
+      const createTime = formatDistanceToNow(new Date(post.createdAt), { locale: ru });
       function isLiked(post) {
         if (post.isLiked === false) { return `./assets/images/like-not-active.svg`;} 
         else { return `./assets/images/like-active.svg`;}
@@ -36,7 +39,7 @@ export function renderPostFromApi({posts, element}) {
               ${post.description}
             </p>
             <p class="post-date">
-              19 минут назад
+              ${createTime} назад
             </p>
         </li>
 `;
