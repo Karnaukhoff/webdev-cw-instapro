@@ -20,7 +20,10 @@ export function getPosts({ token }) {
     })
     .then((data) => {
       return data.posts;
-    });
+    })
+    .catch((error) => {
+      console.warn(error);
+    });;
 }
 
 export function getUserPosts({ id , token}) {
